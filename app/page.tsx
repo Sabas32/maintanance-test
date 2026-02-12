@@ -2,12 +2,6 @@ import DomeGallery from "../components/DomeGallery";
 import Countdown from "../components/Countdown";
 
 const fallbackTargetDate = "2026-02-25T12:00:00+03:00";
-const envTargetDate = process.env.NEXT_PUBLIC_LAUNCH_AT?.trim();
-const targetDate =
-  envTargetDate && envTargetDate.length > 0
-    ? envTargetDate
-    : fallbackTargetDate;
-const displayTimezone = process.env.NEXT_PUBLIC_LAUNCH_TIMEZONE?.trim();
 const schoolRegistrationPath = "https://subscribepage.io/iscc";
 
 const domeImages = [
@@ -47,43 +41,13 @@ const panelClass =
 const primaryButtonClass =
   "inline-flex min-h-12 items-center justify-center rounded-2xl bg-linear-to-r from-[#8c4cf3] to-[#7638de] px-8 text-[0.99rem] font-semibold text-white shadow-[0_14px_28px_-14px_rgba(121,70,221,0.95)] transition-all duration-300 ease-out hover:from-[#7f3ee9] hover:to-[#6d30d5] hover:shadow-[0_18px_30px_-14px_rgba(121,70,221,0.95)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#8745ef] focus-visible:ring-offset-2 focus-visible:ring-offset-[#f7f8fd] active:translate-y-px";
 
-function formatLaunchDate(value: string, timeZone?: string): string {
-  const parsed = new Date(value);
-
-  if (Number.isNaN(parsed.getTime())) {
-    return "date to be confirmed";
-  }
-
-  const safeTimeZone = timeZone && timeZone.length > 0 ? timeZone : undefined;
-
-  try {
-    return new Intl.DateTimeFormat("en-US", {
-      weekday: "short",
-      month: "long",
-      day: "numeric",
-      year: "numeric",
-      hour: "numeric",
-      minute: "2-digit",
-      ...(safeTimeZone ? { timeZone: safeTimeZone, timeZoneName: "short" } : {}),
-    }).format(parsed);
-  } catch {
-    return new Intl.DateTimeFormat("en-US", {
-      weekday: "short",
-      month: "long",
-      day: "numeric",
-      year: "numeric",
-      hour: "numeric",
-      minute: "2-digit",
-    }).format(parsed);
-  }
-}
 
 export default function HomePage() {
-  const launchLabel = formatLaunchDate(targetDate, displayTimezone);
+  // const launchLabel = formatLaunchDate(targetDate);
   const currentYear = new Date().getFullYear();
 
   return (
-    <main className="relative min-h-dvh w-full overflow-x-hidden bg-[#f7f8fd] text-[#111322]">
+    <main className="relative min-h-dvh w-full overflow-x-hidden bg-[#f7f8fd] text-[#111322] lg:h-dvh lg:overflow-hidden">
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <div className="absolute left-[-10%] top-[-26%] h-[46vh] w-[46vh] rounded-full bg-[#8c63f2]/22 blur-[120px]" />
         <div className="absolute right-[-8%] top-[8%] h-[36vh] w-[36vh] rounded-full bg-[#67c6ef]/18 blur-[110px]" />
@@ -92,17 +56,17 @@ export default function HomePage() {
         <div className="noise-overlay absolute inset-0" />
       </div>
 
-      <section className="relative z-10 mx-auto flex min-h-dvh w-full max-w-[92rem] items-center px-2 py-3 sm:px-6 sm:px-6">
-        <div className="grid w-full items-stretch gap-3 sm:gap-4 lg:grid-cols-[minmax(0,0.94fr)_minmax(0,1.06fr)] lg:gap-6">
+      <section className="relative z-10 mx-auto flex min-h-dvh w-full max-w-368 items-center px-2 py-3 sm:px-6 lg:h-dvh lg:items-stretch lg:py-2">
+        <div className="grid w-full items-stretch gap-3 sm:gap-4 lg:h-full lg:grid-cols-[minmax(0,0.94fr)_minmax(0,1.06fr)] lg:gap-4">
           <article
             className={[
               panelClass,
-              "relative w-full overflow-hidden p-4 sm:p-6 md:p-7 lg:min-h-[41rem]",
+              "relative w-full overflow-hidden p-4 sm:p-6 md:p-7 lg:h-full lg:p-5 xl:p-6",
             ].join(" ")}
           >
             <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-linear-to-b from-[#a98cff]/10 to-transparent" />
-            <div className="relative mx-auto flex h-full w-full max-w-[45.5rem] flex-col items-center text-center">
-              <div className="w-full max-w-[41rem] rounded-2xl border border-[#2d1f4a]/10 bg-white/76 p-2 sm:p-2.5">
+            <div className="relative mx-auto flex h-full w-full max-w-182 flex-col items-center text-center">
+              <div className="w-full max-w-164 rounded-2xl border border-[#2d1f4a]/10 bg-white/76 p-2 sm:p-2.5">
                 <div className="flex w-full flex-col items-center gap-2.5 md:flex-row md:justify-between md:gap-3">
                   <div className="flex w-full items-center gap-2.5 rounded-xl border border-[#2d1f4a]/12 bg-white/80 px-3 py-1.5 sm:w-auto">
                     <svg
@@ -151,7 +115,7 @@ export default function HomePage() {
                 </div>
               </div>
 
-              <p className="mt-5 text-[11px] font-medium uppercase tracking-[0.18em] text-[#575f8a]">
+              <p className="mt-5 text-[11px] font-medium uppercase tracking-[0.18em] text-[#575f8a] lg:mt-3">
                 Platform Update
               </p>
 
@@ -159,39 +123,39 @@ export default function HomePage() {
                 ISCC is temporarily offline.
               </h1>
 
-              <p className="mt-3 max-w-[34ch] text-balance text-[clamp(0.95rem,2.8vw,1.22rem)] leading-relaxed text-[#2a3154]/82">
+              <p className="mt-3 max-w-[34ch] text-balance text-[clamp(0.95rem,2.8vw,1.22rem)] leading-relaxed text-[#2a3154]/82 lg:mt-2">
                 We are applying platform updates and running final checks before
                 reopening registration.
               </p>
 
-              <div className="mt-6 w-full max-w-[41rem] rounded-[22px] border border-[#2d1f4a]/10 bg-linear-to-b from-white/94 to-[#f5f2ff]/70 p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.65),0_18px_36px_-30px_rgba(109,78,193,0.52)] sm:p-5">
+              <div className="mt-6 w-full max-w-164 rounded-[22px] border border-[#2d1f4a]/10 bg-linear-to-b from-white/94 to-[#f5f2ff]/70 p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.65),0_18px_36px_-30px_rgba(109,78,193,0.52)] sm:p-5 lg:mt-4 lg:p-4">
                 <p className="mb-2 text-center text-[10px] font-semibold uppercase tracking-[0.2em] text-[#5a6391]">
                   Reopening Countdown
                 </p>
                 <Countdown
-                  targetDate={targetDate}
+                  targetDate={fallbackTargetDate}
                   variant="compact"
                   theme="light"
-                  className="mx-auto max-w-[30rem]"
+                  className="mx-auto max-w-120"
                 />
                 <p className="mt-2 text-center text-[13px] text-[#2d3254]/84 sm:text-[1rem]">
                   Opens on{" "}
-                  <span className="font-semibold text-[#12152a]">{launchLabel}</span>
+                  <span className="font-semibold text-[#12152a]">{fallbackTargetDate}</span>
                 </p>
               </div>
 
-              <div className="mt-5 flex w-full flex-col items-center gap-3 md:flex-row md:justify-center">
+              <div className="mt-5 flex w-full flex-col items-center gap-3 md:flex-row md:justify-center lg:mt-4">
                 <a
                   href={schoolRegistrationPath}
                   target="_blank"
                   rel="noreferrer"
-                  className={[primaryButtonClass, "w-full md:min-w-[17rem] md:w-auto"].join(" ")}
+                  className={[primaryButtonClass, "w-full md:min-w-68 md:w-auto"].join(" ")}
                 >
                   Register Your School
                 </a>
               </div>
 
-              <p className="mt-6 w-full border-t border-[#2d1f4a]/8 px-1 pb-[max(env(safe-area-inset-bottom),0px)] pt-4 text-center text-[11px] tracking-[0.01em] text-[#40466a]/74 sm:text-[12px]">
+              <p className="mt-6 w-full border-t border-[#2d1f4a]/8 px-1 pb-[max(env(safe-area-inset-bottom),0px)] pt-4 text-center text-[11px] tracking-[0.01em] text-[#40466a]/74 sm:text-[12px] lg:mt-4 lg:pt-3">
                 Copyright {currentYear} ISCC. Need help? info@interschoolscoding.com
               </p>
             </div>
@@ -200,7 +164,7 @@ export default function HomePage() {
           <aside
             className={[
               panelClass,
-              "hidden md:flex md:min-h-[28rem] md:p-2 lg:min-h-[46rem] lg:p-3",
+              "hidden md:flex md:min-h-0 md:p-2 lg:h-full lg:min-h-0 lg:p-2.5",
             ].join(" ")}
           >
             <div className="relative flex h-full w-full flex-col overflow-hidden rounded-[18px] border border-[#2d1f4a]/12 bg-linear-to-br from-[#f4f0ff] via-[#eef1ff] to-[#e8f4ff]">
