@@ -8,6 +8,7 @@ type CountdownProps = {
   onComplete?: () => void;
   showLabels?: boolean;
   variant?: "default" | "compact";
+  theme?: "dark" | "light";
 };
 
 type CountdownState = {
@@ -26,18 +27,48 @@ const ZERO_STATE: CountdownState = {
   totalMs: 0,
 };
 
-const tileByVariant = {
-  default: {
-    shell:
-      "min-w-[4.8rem] rounded-xl border border-white/16 bg-white/[0.04] px-3 py-2.5 shadow-[0_12px_28px_-20px_rgba(146,77,255,0.82)] backdrop-blur-sm transition-shadow duration-300 ease-out sm:min-w-[5.5rem]",
-    value: "text-[1.7rem] leading-none tracking-tight sm:text-[2rem]",
-    label: "text-[0.64rem] font-medium sm:text-[0.7rem]",
+const stylesByTheme = {
+  dark: {
+    invalid:
+      "w-full rounded-lg border border-red-400/35 bg-red-500/10 px-3 py-2 text-center text-xs text-red-100",
+    valueText: "text-white",
+    labelText: "text-white/68",
+    statusText: "text-white/60",
+    tileByVariant: {
+      default: {
+        shell:
+          "min-w-[4.8rem] rounded-xl border border-white/16 bg-white/[0.04] px-3 py-2.5 shadow-[0_12px_28px_-20px_rgba(146,77,255,0.82)] backdrop-blur-sm transition-shadow duration-300 ease-out sm:min-w-[5.5rem]",
+        value: "text-[1.7rem] leading-none tracking-tight sm:text-[2rem]",
+        label: "text-[0.64rem] font-medium sm:text-[0.7rem]",
+      },
+      compact: {
+        shell:
+          "min-w-[4.2rem] rounded-xl border border-white/16 bg-white/[0.04] px-2.5 py-2 shadow-[0_12px_28px_-20px_rgba(146,77,255,0.82)] backdrop-blur-sm transition-shadow duration-300 ease-out sm:min-w-[5rem] sm:px-3 sm:py-2.5",
+        value: "text-[1.55rem] leading-none tracking-tight sm:text-[1.9rem]",
+        label: "text-[0.6rem] font-medium sm:text-[0.67rem]",
+      },
+    },
   },
-  compact: {
-    shell:
-      "min-w-[4.2rem] rounded-xl border border-white/16 bg-white/[0.04] px-2.5 py-2 shadow-[0_12px_28px_-20px_rgba(146,77,255,0.82)] backdrop-blur-sm transition-shadow duration-300 ease-out sm:min-w-[5rem] sm:px-3 sm:py-2.5",
-    value: "text-[1.55rem] leading-none tracking-tight sm:text-[1.9rem]",
-    label: "text-[0.6rem] font-medium sm:text-[0.67rem]",
+  light: {
+    invalid:
+      "w-full rounded-lg border border-red-300/70 bg-red-50 px-3 py-2 text-center text-xs text-red-700",
+    valueText: "text-[#15182c]",
+    labelText: "text-[#2f3556]/72",
+    statusText: "text-[#2f3556]/70",
+    tileByVariant: {
+      default: {
+        shell:
+          "min-w-[4.8rem] rounded-xl border border-[#6248a7]/18 bg-white/90 px-3 py-2.5 shadow-[0_14px_30px_-22px_rgba(104,74,176,0.45)] backdrop-blur-sm transition-shadow duration-300 ease-out sm:min-w-[5.5rem]",
+        value: "text-[1.7rem] leading-none tracking-tight sm:text-[2rem]",
+        label: "text-[0.64rem] font-medium sm:text-[0.7rem]",
+      },
+      compact: {
+        shell:
+          "min-w-[4.2rem] rounded-xl border border-[#6248a7]/18 bg-white/90 px-2.5 py-2 shadow-[0_14px_30px_-22px_rgba(104,74,176,0.45)] backdrop-blur-sm transition-shadow duration-300 ease-out sm:min-w-[5rem] sm:px-3 sm:py-2.5",
+        value: "text-[1.55rem] leading-none tracking-tight sm:text-[1.9rem]",
+        label: "text-[0.6rem] font-medium sm:text-[0.67rem]",
+      },
+    },
   },
 } as const;
 
@@ -67,6 +98,7 @@ export default function Countdown({
   onComplete,
   showLabels = true,
   variant = "default",
+  theme = "dark",
 }: CountdownProps) {
   const [state, setState] = useState<CountdownState>(ZERO_STATE);
   const [isInvalidDate, setIsInvalidDate] = useState(false);
@@ -131,7 +163,7 @@ export default function Countdown({
       <div
         aria-live="polite"
         className={[
-          "w-full rounded-lg border border-red-400/35 bg-red-500/10 px-3 py-2 text-center text-xs text-red-100",
+          stylesByTheme[theme].invalid,
           className,
         ]
           .filter(Boolean)
@@ -142,7 +174,8 @@ export default function Countdown({
     );
   }
 
-  const tileClasses = tileByVariant[variant];
+  const themeStyles = stylesByTheme[theme];
+  const tileClasses = themeStyles.tileByVariant[variant];
 
   const units = [
     { key: "days", label: "Days", value: state.days },
@@ -166,13 +199,13 @@ export default function Countdown({
             className={`${tileClasses.shell} flex flex-col items-center justify-center text-center`}
           >
             <span
-              className={`${tileClasses.value} min-w-[2ch] font-semibold tabular-nums text-white`}
+              className={`${tileClasses.value} ${themeStyles.valueText} min-w-[2ch] font-semibold tabular-nums`}
             >
               {padUnit(unit.value)}
             </span>
             {showLabels ? (
               <span
-                className={`${tileClasses.label} mt-1 uppercase tracking-[0.14em] text-white/68`}
+                className={`${tileClasses.label} ${themeStyles.labelText} mt-1 uppercase tracking-[0.14em]`}
               >
                 {unit.label}
               </span>
@@ -181,7 +214,7 @@ export default function Countdown({
         ))}
       </div>
 
-      <p className="mt-2 text-center text-xs text-white/60" role="status">
+      <p className={`mt-2 text-center text-xs ${themeStyles.statusText}`} role="status">
         {isComplete ? "We're live" : "Countdown in progress"}
       </p>
     </div>
