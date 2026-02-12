@@ -4,7 +4,6 @@ This is a small Next.js app for the ISCC maintenance/coming-soon page.
 
 It has:
 - a main maintenance page
-- a school registration page
 - a countdown component
 - an image gallery section
 
@@ -44,4 +43,3 @@ npm run start
 
 - Favicon uses `public/images/iscc-logo.png`.
 - Main page is in `app/page.tsx`.
-- School registration page is in `app/schools/register/page.tsx`.
