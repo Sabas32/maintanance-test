@@ -123,7 +123,7 @@ export default function HomePage() {
                 ISCC platform is under maintenance
               </h1>
 
-              <p className="mt-3 max-w-[34ch] text-balance text-[clamp(0.95rem,2.8vw,1.22rem)] leading-relaxed text-[#2a3154]/82 lg:mt-2">
+              <p className="mt-3 max-w-[40ch] text-balance text-[clamp(0.95rem,2.8vw,1.22rem)] leading-relaxed text-[#2a3154]/82 lg:mt-2">
               We are currently updating the platform for ISCC 2026.  This year the competition is bigger with more categories and prizes to be won.
               </p>
 
