@@ -120,12 +120,11 @@ export default function HomePage() {
               </p>
 
               <h1 className="font-display mt-2 max-w-[13ch] text-balance text-[clamp(1.72rem,5.2vw,3rem)] font-semibold leading-[1.03] tracking-[-0.02em] text-[#12152a] sm:mt-2.5">
-                ISCC is temporarily offline.
+                ISCC platform is under maintenance
               </h1>
 
               <p className="mt-3 max-w-[34ch] text-balance text-[clamp(0.95rem,2.8vw,1.22rem)] leading-relaxed text-[#2a3154]/82 lg:mt-2">
-                We are applying platform updates and running final checks before
-                reopening registration.
+              We are currently updating the platform for ISCC 2026.  This year the competition is bigger with more categories and prizes to be won.
               </p>
 
               <div className="mt-6 w-full max-w-164 rounded-[22px] border border-[#2d1f4a]/10 bg-linear-to-b from-white/94 to-[#f5f2ff]/70 p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.65),0_18px_36px_-30px_rgba(109,78,193,0.52)] sm:p-5 lg:mt-4 lg:p-4">
@@ -174,7 +173,7 @@ export default function HomePage() {
                     Live Preview
                   </p>
                   <p className="font-display text-sm font-semibold text-[#1f2745]">
-                    ISCC Community Gallery
+                    ISCC 2025 Gallery
                   </p>
                 </div>
                 <span className="rounded-full border border-[#8745ef]/28 bg-[#8745ef]/12 px-2.5 py-1 text-[10px] font-medium text-[#5e34b0]">
